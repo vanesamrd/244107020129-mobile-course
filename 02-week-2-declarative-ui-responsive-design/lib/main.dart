@@ -29,7 +29,7 @@ class ProfileCard extends StatelessWidget {
         borderRadius: BorderRadius.circular(16),
       ),
       child: Column(
-        mainAxisSize: MainAxisSize.min,
+        //mainAxisSize: MainAxisSize.min,
         children: [
           Row(
             children: [
@@ -51,6 +51,10 @@ class ProfileCard extends StatelessWidget {
           const Row(children: [
             Expanded(child: Text('NIM')),
             Text('244107020129'),
+          ]),
+          const Row(children: [
+            Expanded(child: Text('Email')),
+            Text('paneja436@gmail.com'),
           ]),
           const Row(children: [
             Expanded(child: Text('Kelas')),
