@@ -116,7 +116,7 @@ Breakpoint dibuat sebagai constant:
 const kWideBreakpoint = 700.0;
 ```
 
-Jumlah kolom ditentukan berdasarkan lebar layar:
+Kemudian jumlah kolom ditentukan berdasarkan lebar layar:
 
 ```dart
 final columns =
@@ -373,7 +373,10 @@ Struktur folder Week 2:
     ├── EL4.png
     ├── RC1.png
     ├── RC2.png
-    ├── RC3.png
+    ├── RC4.png
+    ├── ai-prompt-1.png
+    ├── ai-prompt-2.png
+    ├── ai-prompt-3.png
     └── flutter_test.png
 ```
 
@@ -442,7 +445,7 @@ Expanded
 GridView
 ```
 
-Pendekatan ini sesuai karena card memiliki struktur yang seragam dan profile header membutuhkan ruang sendiri.
+Pendekatan ini dipilih karena card memiliki struktur yang seragam dan profile header membutuhkan ruang sendiri.
 
 ---
 
@@ -600,7 +603,7 @@ Constant tersebut digunakan oleh `LayoutBuilder`.
 
 ### Screenshot
 
-![Refactoring Breakpoint](screenshots/RC3.png)
+![Refactoring Breakpoint](screenshots/RC4.png)
 
 ---
 
@@ -793,6 +796,8 @@ cd 02-week-2-declarative-ui-responsive-design
 
 ## 2. Menjalankan Main Project
 
+Untuk menjalankan `main.dart`:
+
 ```bash
 flutter run
 ```
@@ -801,13 +806,13 @@ flutter run
 
 ## 3. Menjalankan Responsive Dashboard di Chrome
 
-Karena file dashboard praktikum berada di:
+File dashboard praktikum berada di:
 
 ```text
 lib/responsive_dashboard.dart
 ```
 
-jalankan:
+Untuk menjalankannya di Google Chrome:
 
 ```bash
 flutter run -t lib/responsive_dashboard.dart -d chrome
@@ -815,7 +820,9 @@ flutter run -t lib/responsive_dashboard.dart -d chrome
 
 ---
 
-## 4. Menjalankan di Android Emulator
+## 4. Menjalankan Responsive Dashboard di Android Emulator
+
+Untuk menjalankan file `responsive_dashboard.dart` pada Android Emulator:
 
 ```bash
 flutter run -t lib/responsive_dashboard.dart -d emulator-5554
@@ -829,12 +836,24 @@ flutter run -t lib/responsive_dashboard.dart -d emulator-5554
 flutter test
 ```
 
+Hasil yang diharapkan:
+
+```text
+00:01 +2: All tests passed!
+```
+
 ---
 
 ## 6. Menjalankan Flutter Analyze
 
 ```bash
 flutter analyze
+```
+
+Hasil yang diharapkan:
+
+```text
+No issues found!
 ```
 
 ---
