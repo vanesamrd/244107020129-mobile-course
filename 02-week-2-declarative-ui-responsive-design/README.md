@@ -4,9 +4,9 @@
 
 Project ini merupakan tugas Week 2 pada mata kuliah Mobile Development menggunakan Flutter.
 
-Pada tugas ini, aplikasi dashboard yang sebelumnya masih sederhana dikembangkan menjadi **Academic Overview Dashboard**. Dashboard digunakan untuk menampilkan informasi singkat mengenai data akademik mahasiswa.
+Pada tugas ini, aplikasi dashboard sederhana dikembangkan menjadi **Academic Overview Dashboard** untuk menampilkan informasi akademik mahasiswa.
 
-Selain membuat tampilan dashboard, tugas ini juga menerapkan konsep responsive design, perubahan light/dark mode, penggunaan reusable widget, dan accessibility.
+Project ini menerapkan beberapa konsep Flutter seperti responsive design, `Row`, `Column`, `Expanded`, `Container`, reusable widget, light/dark mode, accessibility, dan widget testing.
 
 ---
 
@@ -18,39 +18,42 @@ Selain membuat tampilan dashboard, tugas ini juga menerapkan konsep responsive d
 
 ---
 
-## Deskripsi Project
+# Deskripsi Project
 
-Academic Overview Dashboard merupakan aplikasi sederhana yang menampilkan beberapa informasi akademik mahasiswa dalam bentuk card.
+Academic Overview Dashboard merupakan aplikasi sederhana yang menampilkan informasi akademik mahasiswa dalam beberapa information card.
 
-Informasi yang ditampilkan terdiri dari:
+Informasi yang ditampilkan:
 
-- Assignments
-- Attendance
-- Portfolio
-- Current Week
+| Informasi | Nilai |
+|---|---|
+| Assignments | 8 |
+| Attendance | 92% |
+| Portfolio | Ready |
+| Current Week | 02 |
 
-Selain itu, terdapat profile header yang menampilkan nama, NIM, dan kelas mahasiswa.
+Selain information card, terdapat profile header yang menampilkan nama, NIM, dan kelas mahasiswa.
 
-Tampilan dashboard dibuat responsive. Jadi, ketika ukuran layar berubah, susunan card juga akan menyesuaikan.
+Dashboard dibuat responsive sehingga tampilan berubah berdasarkan ukuran layar.
 
-Pada layar yang lebih sempit, card ditampilkan dalam **satu kolom**, sedangkan pada layar yang lebih lebar card ditampilkan dalam **dua kolom**.
+- Layar sempit → **1 kolom**
+- Layar lebar → **2 kolom**
 
-Aplikasi juga memiliki toggle untuk berpindah antara **light mode** dan **dark mode**.
+Aplikasi juga menyediakan toggle untuk berpindah antara **light mode** dan **dark mode**.
 
 ---
 
-## Tujuan
+# Tujuan
 
-Tujuan dari pengerjaan tugas ini adalah untuk memahami dan menerapkan beberapa konsep Flutter, yaitu:
+Tujuan dari pengerjaan tugas ini adalah:
 
 1. Membuat UI menggunakan widget Flutter.
-2. Menggunakan `Row`, `Column`, `Expanded`, dan `Container`.
-3. Membuat layout yang responsive.
-4. Menggunakan `LayoutBuilder` untuk menentukan jumlah kolom berdasarkan ukuran layar.
-5. Menggunakan theme light dan dark.
-6. Membuat widget yang dapat digunakan kembali.
+2. Memahami penggunaan `Row`, `Column`, `Expanded`, dan `Container`.
+3. Membuat layout responsive.
+4. Menggunakan `LayoutBuilder` untuk menyesuaikan jumlah kolom.
+5. Menggunakan light mode dan dark mode.
+6. Membuat reusable widget.
 7. Menambahkan accessibility menggunakan `Semantics`.
-8. Membuat widget test untuk mengecek responsive layout.
+8. Membuat widget test untuk responsive layout.
 
 ---
 
@@ -58,16 +61,14 @@ Tujuan dari pengerjaan tugas ini adalah untuk memahami dan menerapkan beberapa k
 
 ## 1. Profile Header
 
-Bagian atas dashboard digunakan untuk menampilkan informasi mahasiswa.
-
-Informasi yang ditampilkan adalah:
+Profile header digunakan untuk menampilkan informasi mahasiswa.
 
 ```text
 Vanesa Mardiana Putri
 244107020129 • TI-3G
 ```
 
-Pada bagian ini digunakan beberapa widget seperti:
+Widget yang digunakan antara lain:
 
 - `Container`
 - `Row`
@@ -75,24 +76,24 @@ Pada bagian ini digunakan beberapa widget seperti:
 - `Expanded`
 - `CircleAvatar`
 
-`Expanded` digunakan agar bagian informasi mahasiswa dapat menggunakan ruang yang tersedia tanpa membuat layout menjadi terlalu sempit.
+`Expanded` digunakan agar bagian informasi mahasiswa dapat menggunakan ruang yang tersedia.
 
 ---
 
 ## 2. Information Card
 
-Dashboard memiliki empat card informasi:
+Dashboard memiliki empat information card:
 
-| Informasi | Nilai |
-|---|---|
-| Assignments | 8 |
-| Attendance | 92% |
-| Portfolio | Ready |
-| Current week | 02 |
+```text
+Assignments     8
+Attendance      92%
+Portfolio       Ready
+Current Week    02
+```
 
-Daripada membuat setiap card secara terpisah, card dibuat menjadi widget reusable bernama `InfoCard`.
+Card dibuat menggunakan reusable widget bernama `InfoCard`.
 
-Contohnya:
+Contoh penggunaan:
 
 ```dart
 const InfoCard(
@@ -101,7 +102,7 @@ const InfoCard(
 )
 ```
 
-Dengan cara ini, struktur card cukup dibuat satu kali dan dapat digunakan untuk beberapa informasi yang berbeda.
+Dengan reusable widget, struktur card tidak perlu dibuat berulang kali.
 
 ---
 
@@ -109,13 +110,13 @@ Dengan cara ini, struktur card cukup dibuat satu kali dan dapat digunakan untuk 
 
 Responsive layout dibuat menggunakan `LayoutBuilder`.
 
-Breakpoint yang digunakan pada project ini adalah:
+Breakpoint dibuat sebagai constant:
 
 ```dart
 const kWideBreakpoint = 700.0;
 ```
 
-Kemudian jumlah kolom ditentukan berdasarkan lebar layar:
+Jumlah kolom ditentukan berdasarkan lebar layar:
 
 ```dart
 final columns =
@@ -124,66 +125,180 @@ final columns =
 
 Artinya:
 
-- Jika lebar layar kurang dari `700.0`, digunakan **1 kolom**.
-- Jika lebar layar `700.0` atau lebih, digunakan **2 kolom**.
+- Lebar layar **kurang dari 700 px** → **1 kolom**
+- Lebar layar **700 px atau lebih** → **2 kolom**
 
-Dengan cara ini, tampilan dashboard dapat menyesuaikan ukuran layar.
-
-### Tampilan Narrow
-
-Pada layar sempit, susunan card menjadi:
+### Narrow Layout
 
 ```text
+Profile Header
+
 Assignments
-
 Attendance
-
 Portfolio
-
-Current week
+Current Week
 ```
 
-### Tampilan Wide
-
-Pada layar lebar, susunan card menjadi:
+### Wide Layout
 
 ```text
-Assignments     Attendance
+Profile Header
 
-Portfolio       Current week
+Assignments     Attendance
+Portfolio       Current Week
 ```
 
 ---
 
-## 4. Light dan Dark Mode
+# 4. Light dan Dark Mode
 
-Aplikasi memiliki dua theme, yaitu light mode dan dark mode.
+Aplikasi memiliki light mode dan dark mode.
 
-Toggle theme diletakkan pada bagian AppBar menggunakan `CupertinoSwitch`.
+Toggle theme diletakkan pada `AppBar` menggunakan `CupertinoSwitch`.
 
-State untuk menyimpan kondisi theme dibuat dengan:
+State theme:
 
 ```dart
 bool isDark = false;
 ```
 
-Kemudian theme ditentukan berdasarkan nilai tersebut:
+Theme ditentukan berdasarkan state:
 
 ```dart
 themeMode: isDark ? ThemeMode.dark : ThemeMode.light,
 ```
 
-Jika `isDark` bernilai `false`, aplikasi menggunakan light mode.
-
-Jika `isDark` bernilai `true`, aplikasi menggunakan dark mode.
+Ketika toggle diaktifkan, aplikasi berpindah ke dark mode.
 
 ---
 
-## 5. Accessibility
+# Eksperimen Warm-up + Screenshot Hasilnya
 
-Untuk membantu accessibility, beberapa bagian penting pada aplikasi diberikan `Semantics`.
+Sebelum pengembangan lebih lanjut, dilakukan beberapa eksperimen sederhana untuk memahami perilaku layout Flutter.
 
-Pada information card digunakan:
+## 1. Menghapus `Expanded`
+
+`Expanded` pada bagian nama di dalam profile header dihapus sementara untuk melihat perubahan layout.
+
+Setelah eksperimen selesai, `Expanded` dikembalikan ke kode utama.
+
+### Screenshot
+
+![Eksperimen Menghapus Expanded](screenshots/EMU1.png)
+
+---
+
+## 2. Mengubah `mainAxisSize`
+
+Nilai:
+
+```dart
+mainAxisSize: MainAxisSize.min
+```
+
+diubah sementara menjadi nilai default:
+
+```dart
+MainAxisSize.max
+```
+
+Tujuannya untuk melihat perubahan tinggi layout.
+
+Setelah eksperimen selesai, nilai dikembalikan ke:
+
+```dart
+MainAxisSize.min
+```
+
+### Screenshot
+
+![Eksperimen MainAxisSize](screenshots/EMU2.png)
+
+---
+
+## 3. Menambahkan Email
+
+Ditambahkan satu baris data menggunakan pola `Row` dan `Expanded`.
+
+Contoh:
+
+```dart
+Row(
+  children: [
+    const Expanded(
+      child: Text('Email'),
+    ),
+    const Text('vanesa@email.com'),
+  ],
+)
+```
+
+### Screenshot
+
+![Eksperimen Menambahkan Email](screenshots/EMU3.png)
+
+---
+
+# Eksperimen Layout + Screenshot Hasilnya
+
+## 1. Mengubah Breakpoint
+
+Breakpoint `700.0` diubah sementara ke nilai lain untuk melihat perubahan jumlah kolom.
+
+Setelah eksperimen, breakpoint dikembalikan ke:
+
+```dart
+const kWideBreakpoint = 700.0;
+```
+
+### Screenshot
+
+![Eksperimen Breakpoint](screenshots/EL1.png)
+
+---
+
+## 2. Mengubah Theme Mode
+
+`themeMode` diubah sementara menjadi:
+
+```dart
+ThemeMode.dark
+```
+
+untuk melihat tampilan dark mode secara langsung.
+
+Setelah eksperimen selesai, kode dikembalikan ke konfigurasi akhir.
+
+### Screenshot
+
+![Eksperimen Theme Mode](screenshots/EL2.png)
+
+---
+
+## 3. Menguji Ukuran Layar
+
+Aplikasi diuji menggunakan ukuran layar yang berbeda.
+
+Contoh pengujian:
+
+```text
+400 x 800  → 1 kolom
+1200 x 800 → 2 kolom
+```
+
+### Screenshot
+
+![Eksperimen Ukuran Layar](screenshots/EL3.png)
+
+---
+
+## 4. Menambahkan `Semantics`
+
+`Semantics` digunakan pada informasi penting seperti information card dan toggle dark mode.
+
+Tujuannya agar elemen penting memiliki label yang dapat dibaca oleh screen reader.
+
+Contoh:
 
 ```dart
 Semantics(
@@ -194,7 +309,28 @@ Semantics(
 )
 ```
 
-Sehingga informasi pada card dapat dibaca dengan lebih jelas oleh screen reader.
+### Screenshot
+
+![Eksperimen Accessibility](screenshots/EL4.png)
+
+---
+
+# Accessibility
+
+Accessibility diterapkan menggunakan `Semantics`.
+
+Pada information card digunakan label:
+
+```dart
+Semantics(
+  label: '$title: $value',
+  child: Card(
+    ...
+  ),
+)
+```
+
+Dengan demikian informasi pada card dapat dibaca dengan lebih jelas oleh screen reader.
 
 Toggle dark mode juga diberikan label:
 
@@ -211,58 +347,70 @@ Semantics(
 
 # Struktur Project
 
-Struktur utama folder Week 2 adalah:
+Struktur folder Week 2:
 
 ```text
 02-week-2-declarative-ui-responsive-design/
 │
 ├── README.md
+│
 ├── lib/
-│   └── main.dart
+│   ├── main.dart
+│   └── responsive_dashboard.dart
 │
 ├── test/
 │   └── widget_test.dart
 │
 └── screenshots/
     ├── narrow.png
-    └── wide.png
+    ├── wide.png
+    ├── EMU1.png
+    ├── EMU2.png
+    ├── EMU3.png
+    ├── EL1.png
+    ├── EL2.png
+    ├── EL3.png
+    ├── EL4.png
+    ├── RC1.png
+    ├── RC2.png
+    ├── RC3.png
+    └── flutter_test.png
 ```
 
-File utama yang digunakan adalah:
+Keterangan:
 
-- `lib/main.dart` → kode aplikasi
+- `lib/main.dart` → aplikasi utama dashboard
+- `lib/responsive_dashboard.dart` → file dashboard praktikum
 - `test/widget_test.dart` → widget test
-- `screenshots/narrow.png` → hasil tampilan layar sempit
-- `screenshots/wide.png` → hasil tampilan layar lebar
+- `screenshots/narrow.png` → hasil layar sempit
+- `screenshots/wide.png` → hasil layar lebar
 - `README.md` → dokumentasi project
 
 ---
 
 # Widget yang Digunakan
 
-Beberapa widget Flutter yang digunakan dalam project ini antara lain:
-
 | Widget | Kegunaan |
 |---|---|
-| `MaterialApp` | Menjadi root dari aplikasi dan mengatur theme |
-| `Scaffold` | Menyusun struktur halaman |
-| `AppBar` | Menampilkan judul dan toggle theme |
+| `MaterialApp` | Root aplikasi dan pengaturan theme |
+| `Scaffold` | Struktur halaman |
+| `AppBar` | Judul dan toggle theme |
 | `LayoutBuilder` | Menyesuaikan layout berdasarkan ukuran layar |
 | `Column` | Menyusun widget secara vertikal |
 | `Row` | Menyusun widget secara horizontal |
-| `Expanded` | Mengatur penggunaan ruang yang tersedia |
-| `Container` | Membuat bagian profile header |
+| `Expanded` | Mengatur penggunaan ruang |
+| `Container` | Membuat profile header |
 | `GridView.count` | Menampilkan card dalam bentuk grid |
-| `Card` | Membuat tampilan card |
+| `Card` | Membuat information card |
 | `CircleAvatar` | Menampilkan icon profile |
-| `CupertinoSwitch` | Mengubah light/dark mode |
-| `Semantics` | Menambahkan informasi accessibility |
+| `CupertinoSwitch` | Toggle light/dark mode |
+| `Semantics` | Accessibility |
 
 ---
 
 # AI Prompt Challenge
 
-Pada tugas ini juga dilakukan beberapa percobaan menggunakan AI untuk membantu memahami keputusan teknis yang digunakan pada project.
+AI digunakan setelah implementasi dasar selesai untuk membantu membandingkan alternatif teknis dan memverifikasi keputusan yang digunakan.
 
 ## 1. GridView vs LayoutBuilder + Column
 
@@ -270,59 +418,51 @@ Pada tugas ini juga dilakukan beberapa percobaan menggunakan AI untuk membantu m
 
 > Compare GridView and LayoutBuilder + Column for creating a responsive dashboard in Flutter. Explain the trade-offs in terms of responsive layout, flexibility, scrolling, and accessibility. Recommend the most appropriate approach for this Academic Overview dashboard.
 
-### Hasil Utama
+### Hasil Ringkas
 
-Dari perbandingan tersebut, `GridView` cocok digunakan untuk menampilkan beberapa item dalam bentuk grid dan juga sudah mendukung scrolling.
+`GridView` lebih ringkas, sudah mendukung scrolling, dan menyediakan spacing antar item.
 
-Sementara itu, `LayoutBuilder` dapat digunakan untuk mengetahui ukuran area yang tersedia sehingga layout dapat dibuat menyesuaikan ukuran layar.
+`LayoutBuilder` digunakan untuk membaca ukuran area yang tersedia dan menentukan jumlah kolom.
 
-Pada project ini, keduanya digunakan bersama.
-
-Struktur akhirnya adalah:
-
-```text
-LayoutBuilder
-      ↓
-Column
-      ↓
-ProfileHeader
-      ↓
-Expanded
-      ↓
-GridView.count
-```
+Untuk dashboard dengan empat card yang seragam, kombinasi `LayoutBuilder` dan `GridView` lebih sesuai.
 
 ### Keputusan
 
-Pendekatan tersebut dipilih karena sesuai dengan kebutuhan dashboard.
+Tetap menggunakan:
 
-Profile header dibuat terpisah, sedangkan card diletakkan di dalam `GridView`.
+```text
+LayoutBuilder
+    ↓
+Column
+    ↓
+ProfileHeader
+    ↓
+Expanded
+    ↓
+GridView
+```
 
-Dengan begitu, pada layar sempit profile tetap memiliki ruang yang cukup dan card dapat ditampilkan satu per satu.
+Pendekatan ini sesuai karena card memiliki struktur yang seragam dan profile header membutuhkan ruang sendiri.
 
 ---
 
-## 2. Masalah Expanded dan Overflow
+## 2. Expanded dan Overflow
 
 ### Prompt
 
 > Explain when Expanded causes overflow in Row or Column in Flutter. Show an example of failed code and explain how to fix it.
 
-### Hasil Utama
+### Hasil Ringkas
 
-`Expanded` digunakan ketika sebuah widget ingin mengisi ruang yang tersedia di dalam `Row` atau `Column`.
+`Expanded` digunakan untuk mengisi ruang yang tersedia di dalam `Row` atau `Column`.
 
-Namun, penggunaan `Expanded` tetap harus memperhatikan constraint dari parent.
+Masalah dapat terjadi apabila parent memiliki constraint yang tidak sesuai atau ruang yang tersedia terlalu terbatas.
 
-Dalam proses pengerjaan dashboard, sempat terjadi overflow pada bagian profile ketika profile header masih ditempatkan di dalam area grid.
+Pada pengerjaan dashboard, sempat terjadi overflow pada profile header ketika berada di area grid yang terlalu sempit.
 
-Masalah tersebut terjadi karena ruang yang tersedia untuk profile menjadi terlalu terbatas pada layar sempit.
+### Keputusan
 
-### Perbaikan
-
-Profile header kemudian dipisahkan dari `GridView`.
-
-Struktur akhirnya menjadi:
+Profile header dipisahkan dari `GridView` sehingga struktur menjadi:
 
 ```text
 Column
@@ -331,7 +471,7 @@ Column
     └── GridView
 ```
 
-Dengan struktur tersebut, profile header mendapatkan ruangnya sendiri dan `GridView` menggunakan sisa ruang yang tersedia.
+Dengan struktur tersebut, profile header mendapatkan ruang sendiri dan grid menggunakan sisa ruang.
 
 ---
 
@@ -341,49 +481,67 @@ Dengan struktur tersebut, profile header mendapatkan ruangnya sendiri dan `GridV
 
 > Verify whether the responsive layout, accessibility implementation, and Flutter widgets used in the dashboard are appropriate and stable.
 
-### Hasil Verification
+### Hasil Ringkas
 
-Responsive layout diuji menggunakan dua ukuran layar:
+Hasil verifikasi menunjukkan bahwa:
 
-```text
-400 x 800
+- Layout dapat menyesuaikan layar sempit dan lebar.
+- Accessibility menggunakan `Semantics`.
+- Widget yang digunakan merupakan widget Flutter stable.
+- Breakpoint digunakan secara konsisten.
+- Layout diuji pada ukuran `400 x 800` dan `1200 x 800`.
+
+### Keputusan
+
+`LayoutBuilder`, `GridView`, `CupertinoSwitch`, dan `Semantics` tetap digunakan karena sesuai dengan kebutuhan project.
+
+Breakpoint project tetap menggunakan:
+
+```dart
+const kWideBreakpoint = 700.0;
 ```
 
-dan:
+---
 
-```text
-1200 x 800
-```
+# Ringkasan Keputusan AI Challenge
 
-Hasil yang diharapkan:
+| Aspek | Keputusan |
+|---|---|
+| Responsive layout | `LayoutBuilder` + `GridView` |
+| Scroll | `GridView` |
+| Reusable card | `InfoCard` |
+| Theme | `Theme.of(context)` |
+| Breakpoint | `kWideBreakpoint = 700.0` |
+| Accessibility | `Semantics` |
+| Theme toggle | `CupertinoSwitch` |
 
-```text
-400 x 800  → 1 column
-1200 x 800 → 2 columns
-```
+Rekomendasi AI tidak langsung digunakan tanpa pengujian. Hasilnya dibandingkan dengan kebutuhan project dan diverifikasi melalui running aplikasi, widget test, dan `flutter analyze`.
 
-Accessibility diterapkan menggunakan `Semantics` pada information card dan toggle dark mode.
+---
 
-Widget yang digunakan juga merupakan widget Flutter yang digunakan secara langsung dalam project, seperti:
+# Screenshot Hasil AI Prompt Challenge
 
-- `LayoutBuilder`
-- `Column`
-- `Row`
-- `Expanded`
-- `GridView`
-- `Card`
-- `CupertinoSwitch`
-- `Semantics`
+Screenshot proses AI Prompt Challenge disimpan sebagai dokumentasi.
+
+### AI Prompt 1
+
+![AI Prompt 1](screenshots/ai-prompt-1.png)
+
+### AI Prompt 2
+
+![AI Prompt 2](screenshots/ai-prompt-2.png)
+
+### AI Prompt 3
+
+![AI Prompt 3](screenshots/ai-prompt-3.png)
 
 ---
 
 # Refactoring
 
-Setelah fitur utama selesai, dilakukan beberapa perubahan pada kode agar lebih rapi dan mudah digunakan kembali.
+## 1. Membuat `InfoCard` sebagai Reusable Widget
 
-## 1. Membuat InfoCard sebagai Reusable Widget
-
-Information card dibuat menjadi widget tersendiri:
+Information card dibuat menjadi reusable widget:
 
 ```dart
 class InfoCard extends StatelessWidget {
@@ -398,15 +556,19 @@ class InfoCard extends StatelessWidget {
 }
 ```
 
-Dengan begitu, tidak perlu membuat struktur card yang sama berulang kali.
+Dengan demikian struktur card dapat digunakan kembali.
+
+### Screenshot
+
+![Refactoring InfoCard](screenshots/RC1.png)
 
 ---
 
-## 2. Menggunakan Theme
+## 2. Menggunakan `Theme.of(context)`
 
-Untuk beberapa bagian tampilan digunakan `Theme.of(context)`.
+Styling menggunakan `Theme.of(context)`.
 
-Contohnya:
+Contoh:
 
 ```dart
 Theme.of(context).textTheme.titleLarge
@@ -418,65 +580,81 @@ dan:
 Theme.of(context).colorScheme.surfaceContainerHighest
 ```
 
-Penggunaan theme membuat tampilan dapat mengikuti light dan dark mode.
+Penggunaan theme membuat tampilan dapat mengikuti light mode dan dark mode.
+
+### Screenshot
+
+![Refactoring Theme](screenshots/RC2.png)
 
 ---
 
 ## 3. Membuat Breakpoint sebagai Constant
 
-Breakpoint responsive dibuat menjadi satu constant:
+Breakpoint dibuat menjadi satu constant:
 
 ```dart
 const kWideBreakpoint = 700.0;
 ```
 
-Constant ini digunakan oleh `LayoutBuilder` sehingga nilai breakpoint tidak ditulis berulang kali.
+Constant tersebut digunakan oleh `LayoutBuilder`.
+
+### Screenshot
+
+![Refactoring Breakpoint](screenshots/RC3.png)
 
 ---
 
 # Testing
 
-Widget test dibuat untuk mengecek apakah dashboard dapat menyesuaikan layout pada ukuran layar yang berbeda.
+Widget test digunakan untuk mengecek responsive layout.
 
-## 1. Narrow Screen
+## Narrow Screen
 
-Ukuran layar yang digunakan:
+Ukuran:
 
 ```text
 400 x 800
 ```
 
-Test mengecek bahwa ukuran card berada pada kondisi layar sempit.
+Expected:
 
-```dart
-expect(width.width, lessThan(700));
+```text
+1 column
 ```
 
-Hasil yang diharapkan adalah dashboard menggunakan satu kolom.
+Test:
+
+```dart
+expect(width, lessThan(700));
+```
 
 ---
 
-## 2. Wide Screen
+## Wide Screen
 
-Ukuran layar yang digunakan:
+Ukuran:
 
 ```text
 1200 x 800
 ```
 
-Test mengecek ukuran card pada kondisi layar lebar.
+Expected:
 
-```dart
-expect(width.width, greaterThan(500));
+```text
+2 columns
 ```
 
-Hasil yang diharapkan adalah dashboard menggunakan dua kolom.
+Test:
+
+```dart
+expect(width, greaterThan(500));
+```
 
 ---
 
-## Menjalankan Widget Test
+## Menjalankan Test
 
-Untuk menjalankan test digunakan perintah:
+Gunakan:
 
 ```bash
 flutter test
@@ -490,13 +668,15 @@ Hasil pengujian:
 
 Artinya kedua widget test berhasil dijalankan.
 
+### Screenshot
+
+![Hasil Flutter Test](screenshots/flutter_test.png)
+
 ---
 
 # Flutter Analyze
 
-Selain widget test, project juga diperiksa menggunakan `flutter analyze`.
-
-Perintah yang digunakan:
+Untuk melakukan pengecekan static analysis:
 
 ```bash
 flutter analyze
@@ -505,21 +685,14 @@ flutter analyze
 Hasil:
 
 ```text
-Analyzing 02-week-2-declarative-ui-responsive-design...
-No issues found! (ran in 1.1s)
+No issues found!
 ```
-
-Hasil tersebut menunjukkan bahwa pada saat dilakukan pengecekan tidak ditemukan masalah dari static analysis Flutter.
 
 ---
 
 # Hasil dan Output Aplikasi
 
-Setelah aplikasi dijalankan, halaman utama menampilkan **Academic Overview**.
-
-Tampilan terdiri dari profile mahasiswa dan empat information card.
-
-Secara umum tampilannya adalah:
+Setelah dijalankan, aplikasi menampilkan:
 
 ```text
 Academic Overview
@@ -531,16 +704,16 @@ Vanesa Mardiana Putri
 [ Assignments ]    8
 [ Attendance ]     92%
 [ Portfolio ]      Ready
-[ Current week ]   02
+[ Current Week ]   02
 ```
 
-Pada bagian kanan AppBar terdapat toggle yang dapat digunakan untuk mengubah light mode dan dark mode.
+Pada bagian kanan AppBar terdapat toggle untuk berpindah antara light mode dan dark mode.
 
 ---
 
-## Hasil Narrow Layout
+# Hasil Narrow Layout
 
-Pada ukuran layar sempit, dashboard menggunakan satu kolom.
+Pada layar sempit dashboard menggunakan satu kolom.
 
 ```text
 400 x 800
@@ -550,18 +723,18 @@ Profile Header
 Assignments
 Attendance
 Portfolio
-Current week
+Current Week
 ```
 
-Screenshot hasil running:
+### Screenshot
 
 ![Narrow Layout](screenshots/narrow.png)
 
 ---
 
-## Hasil Wide Layout
+# Hasil Wide Layout
 
-Pada ukuran layar lebar, dashboard menggunakan dua kolom.
+Pada layar lebar dashboard menggunakan dua kolom.
 
 ```text
 1200 x 800
@@ -569,11 +742,10 @@ Pada ukuran layar lebar, dashboard menggunakan dua kolom.
 Profile Header
 
 Assignments     Attendance
-
-Portfolio       Current week
+Portfolio       Current Week
 ```
 
-Screenshot hasil running:
+### Screenshot
 
 ![Wide Layout](screenshots/wide.png)
 
@@ -581,25 +753,29 @@ Screenshot hasil running:
 
 # Hasil Light dan Dark Mode
 
-Aplikasi dapat berpindah dari light mode ke dark mode menggunakan `CupertinoSwitch`.
+Aplikasi dapat berpindah antara light mode dan dark mode menggunakan `CupertinoSwitch`.
 
-Kondisi awal:
+Light mode:
 
 ```text
 Light Mode
 ```
 
-Setelah toggle diaktifkan:
+Dark mode:
 
 ```text
 Dark Mode
 ```
 
-Perubahan tersebut dilakukan menggunakan:
+Konfigurasi theme:
 
 ```dart
 themeMode: isDark ? ThemeMode.dark : ThemeMode.light,
 ```
+
+### Screenshot Dark Mode
+
+![Dark Mode](screenshots/dark-mode.png)
 
 ---
 
@@ -607,7 +783,7 @@ themeMode: isDark ? ThemeMode.dark : ThemeMode.light,
 
 ## 1. Masuk ke Folder Project
 
-Buka terminal kemudian masuk ke folder Week 2:
+Dari repository utama:
 
 ```bash
 cd 02-week-2-declarative-ui-responsive-design
@@ -615,25 +791,39 @@ cd 02-week-2-declarative-ui-responsive-design
 
 ---
 
-## 2. Menjalankan Aplikasi
-
-Untuk menjalankan aplikasi pada device yang tersedia:
+## 2. Menjalankan Main Project
 
 ```bash
 flutter run
 ```
 
-Jika ingin menjalankan pada Android Emulator yang digunakan saat pengerjaan:
+---
+
+## 3. Menjalankan Responsive Dashboard di Chrome
+
+Karena file dashboard praktikum berada di:
+
+```text
+lib/responsive_dashboard.dart
+```
+
+jalankan:
 
 ```bash
-flutter run -d emulator-5554
+flutter run -t lib/responsive_dashboard.dart -d chrome
 ```
 
 ---
 
-## 3. Menjalankan Test
+## 4. Menjalankan di Android Emulator
 
-Untuk menjalankan widget test:
+```bash
+flutter run -t lib/responsive_dashboard.dart -d emulator-5554
+```
+
+---
+
+## 5. Menjalankan Widget Test
 
 ```bash
 flutter test
@@ -641,9 +831,7 @@ flutter test
 
 ---
 
-## 4. Menjalankan Flutter Analyze
-
-Untuk mengecek apakah terdapat masalah pada project:
+## 6. Menjalankan Flutter Analyze
 
 ```bash
 flutter analyze
@@ -651,11 +839,76 @@ flutter analyze
 
 ---
 
+# Checklist Verifikasi
+
+- [x] `flutter analyze` tidak menghasilkan error.
+- [x] `flutter test` lulus semua widget test responsif.
+- [x] Aplikasi dapat dijalankan pada ukuran layar sempit dan lebar.
+- [x] Dark mode memiliki kontras dan teks yang terbaca.
+- [x] Struktur widget dapat dijelaskan saat code review.
+- [x] Screenshot, folder `test/`, dan README sudah tersimpan pada folder tugas Week 2.
+
+---
+
+# Refleksi + Jawaban
+
+## 1. Apa perbedaan imperative dan declarative saat membangun UI?
+
+Pada pendekatan imperative, developer menjelaskan langkah-langkah untuk mengubah tampilan.
+
+Pada pendekatan declarative seperti Flutter, developer menjelaskan kondisi UI yang diinginkan berdasarkan state.
+
+Pada project ini, tampilan theme berubah berdasarkan nilai `isDark`.
+
+---
+
+## 2. Kapan `Expanded` membantu dan kapan menyebabkan layout error?
+
+`Expanded` membantu ketika widget perlu menggunakan ruang yang tersedia di dalam `Row` atau `Column`.
+
+Namun, `Expanded` dapat menyebabkan error apabila parent memiliki constraint yang tidak sesuai atau ruang yang tersedia terlalu terbatas.
+
+Pada project ini, masalah layout pada profile header diselesaikan dengan memisahkan profile header dari `GridView`.
+
+---
+
+## 3. Bagaimana breakpoint dan theme memengaruhi pengalaman pengguna?
+
+Breakpoint menentukan kapan layout berubah berdasarkan ukuran layar.
+
+Pada project ini:
+
+```text
+< 700 px → 1 kolom
+≥ 700 px → 2 kolom
+```
+
+Dengan demikian informasi tetap mudah dibaca pada layar yang berbeda.
+
+Theme memberikan pilihan kepada pengguna untuk menggunakan light mode atau dark mode.
+
+---
+
+## 4. Apa yang diverifikasi dari rekomendasi AI?
+
+Rekomendasi AI dibandingkan dengan kebutuhan project dan kemudian diverifikasi melalui implementasi.
+
+Hal yang diverifikasi meliputi:
+
+- responsive layout
+- accessibility
+- penggunaan widget Flutter
+- widget testing
+- `flutter analyze`
+- hasil running pada ukuran layar yang berbeda
+
+---
+
 # Kesimpulan
 
-Pada tugas Week 2 ini, dashboard Flutter dikembangkan menjadi **Academic Overview Dashboard** yang dapat menyesuaikan tampilannya berdasarkan ukuran layar.
+Pada tugas Week 2, dashboard Flutter dikembangkan menjadi **Academic Overview Dashboard** yang memiliki responsive layout, light/dark mode, reusable widget, accessibility, dan widget testing.
 
-Beberapa konsep yang berhasil diterapkan adalah:
+Konsep yang diterapkan meliputi:
 
 - `Row`
 - `Column`
@@ -663,16 +916,33 @@ Beberapa konsep yang berhasil diterapkan adalah:
 - `Container`
 - `LayoutBuilder`
 - `GridView`
-- Reusable widget
-- Light/dark mode
+- `Card`
+- `InfoCard`
 - `CupertinoSwitch`
 - `Semantics`
-- Widget testing
+- Light/Dark Theme
+- Widget Testing
 
-Responsive layout dibuat dengan breakpoint `700.0`. Pada layar sempit dashboard menggunakan satu kolom, sedangkan pada layar lebar menggunakan dua kolom.
+Responsive layout menggunakan breakpoint:
 
-Selain itu, dilakukan refactoring dengan membuat `InfoCard` sebagai reusable widget dan menggunakan `Theme.of(context)` untuk beberapa bagian tampilan.
+```dart
+const kWideBreakpoint = 700.0;
+```
 
-Pengujian dilakukan menggunakan `flutter test` dan `flutter analyze`. Hasil widget test menunjukkan bahwa kedua test berhasil dijalankan, sedangkan `flutter analyze` tidak menemukan masalah pada saat pengecekan.
+Pada layar sempit dashboard menggunakan satu kolom, sedangkan pada layar lebar menggunakan dua kolom.
 
-Screenshot hasil running aplikasi disimpan pada folder `screenshots/` sebagai dokumentasi hasil implementasi.
+Refactoring dilakukan dengan membuat `InfoCard` sebagai reusable widget, menggunakan `Theme.of(context)`, dan membuat breakpoint menjadi constant.
+
+Pengujian dilakukan menggunakan:
+
+```bash
+flutter test
+```
+
+dan:
+
+```bash
+flutter analyze
+```
+
+Screenshot hasil running dan eksperimen disimpan pada folder `screenshots/` sebagai dokumentasi project.
