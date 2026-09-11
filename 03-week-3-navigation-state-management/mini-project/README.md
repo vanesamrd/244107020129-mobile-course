@@ -1178,7 +1178,7 @@ Total tugas: 3
 
 # 📸 Hasil Success
 
-![Success](../screenshots/06_success.png)
+![Success](../screenshots/mp-list.png)
 
 ---
 
@@ -1570,7 +1570,7 @@ State ToDo dikelola menggunakan `TodoNotifier`, sedangkan statistik dikelola men
 
 ## 6. Success
 
-![Success](../screenshots/06_success.png)
+![Success](../screenshots/mp-list.png)
 
 ---
 
