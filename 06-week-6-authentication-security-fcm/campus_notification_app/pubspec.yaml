@@ -1,0 +1,30 @@
+name: campus_notification_app
+description: "Aplikasi Notifikasi Kampus dengan Dio Refresh, FCM Deep Link, dan Route Guard"
+publish_to: 'none'
+version: 1.0.0+1
+
+environment:
+  sdk: '>=3.0.0 <4.0.0'
+
+dependencies:
+  flutter:
+    sdk: flutter
+  # HTTP Client & Interceptor
+  dio: ^5.4.0
+  # Secure Storage Hardware Vault
+  flutter_secure_storage: ^9.0.0
+  # Routing & Deep Link Guard
+  go_router: ^13.0.0
+  # Firebase Push Notifications
+  firebase_core: ^2.24.2
+  firebase_messaging: ^14.7.10
+  # Icons
+  cupertino_icons: ^1.0.6
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^3.0.0
+
+flutter:
+  uses-material-design: true
