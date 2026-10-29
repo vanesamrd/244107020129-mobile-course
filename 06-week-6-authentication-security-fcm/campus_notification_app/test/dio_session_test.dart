@@ -38,7 +38,7 @@ void main() {
           {bool isRetry = false}) async {
         if (token == 'expired_token' && !isRetry) {
           refreshCalled = true;
-          final newAccessToken = 'new_refreshed_access_token';
+          const newAccessToken = 'new_refreshed_access_token';
           await mockStorage.write('access_token', newAccessToken);
           retryCount++;
           return await simulateHttpRequest(newAccessToken, isRetry: true);

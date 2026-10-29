@@ -13,8 +13,9 @@ class FcmService {
 
   /// Token terpotong (masked) untuk keamanan: 'fcm_e8K9...zQ2x'
   String get maskedToken {
-    if (_fcmToken == null || _fcmToken!.length <= 14)
+    if (_fcmToken == null || _fcmToken!.length <= 14) {
       return 'fcm_token_ready...';
+    }
     return '${_fcmToken!.substring(0, 8)}...${_fcmToken!.substring(_fcmToken!.length - 6)}';
   }
 
