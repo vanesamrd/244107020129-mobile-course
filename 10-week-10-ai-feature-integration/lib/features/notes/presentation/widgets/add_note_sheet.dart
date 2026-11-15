@@ -4,6 +4,7 @@
 import 'package:flutter/material.dart';
 
 import '../../domain/note.dart';
+import '../../domain/note_title_validator.dart';
 import 'note_card.dart';
 
 class AddNoteSheet extends StatefulWidget {
@@ -70,6 +71,7 @@ class _AddNoteSheetState extends State<AddNoteSheet> {
 
             // Title field
             TextField(
+              key: const Key('note-title-field'),
               controller: _titleCtrl,
               autofocus: true,
               style: TextStyle(
@@ -91,6 +93,7 @@ class _AddNoteSheetState extends State<AddNoteSheet> {
 
             // Body field
             TextField(
+              key: const Key('note-body-field'),
               controller: _bodyCtrl,
               maxLines: 5,
               style: TextStyle(
@@ -158,6 +161,7 @@ class _AddNoteSheetState extends State<AddNoteSheet> {
               children: [
                 Expanded(
                   child: OutlinedButton(
+                    key: const Key('cancel-note-button'),
                     style: OutlinedButton.styleFrom(
                       side: BorderSide(color: _selectedColor.accent),
                       foregroundColor: _selectedColor.accent,
@@ -169,11 +173,12 @@ class _AddNoteSheetState extends State<AddNoteSheet> {
                 const SizedBox(width: 12),
                 Expanded(
                   child: FilledButton(
+                    key: const Key('save-note-button'),
                     style: FilledButton.styleFrom(
                       backgroundColor: _selectedColor.accent,
                     ),
                     onPressed: () {
-                      if (_titleCtrl.text.trim().isNotEmpty) {
+                      if (isValidNoteTitle(_titleCtrl.text)) {
                         widget.onSave(
                           _titleCtrl.text,
                           _bodyCtrl.text,

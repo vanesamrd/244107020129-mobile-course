@@ -239,6 +239,7 @@ class NotesScreen extends ConsumerWidget {
 
       // ── Floating Action Button ───────────────────────────────────────────
       floatingActionButton: FloatingActionButton.extended(
+        key: const Key('add-note-fab'),
         onPressed: () => _openAddSheet(context, ref),
         icon: const Icon(Icons.edit_note_rounded),
         label: const Text('Tambah Catatan'),

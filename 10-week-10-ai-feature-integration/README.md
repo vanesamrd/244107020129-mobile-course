@@ -2,6 +2,11 @@
 
 Aplikasi catatan mobile berbasis Flutter dengan integrasi cerdas **AI Chat Assistant (Google Gemini API)**, penyimpanan kunci API terenkripsi menggunakan **FlutterSecureStorage**, sanitasi privasi pengguna, dan strategi **fallback offline**. Dibangun melanjutkan arsitektur bersih (*Clean Architecture / Feature-First*) dari Week 9 dengan dukungan SQLite dan Riverpod.
 
+Nama : Vanesa Mardiana Putri
+NIM : 244107020129
+Kelas : TI-3G
+Absen : 25
+
 ---
 
 ## 1. Konsep & Arsitektur Integrasi Fitur AI
@@ -64,30 +69,45 @@ Fitur AI pada aplikasi ini bertindak sebagai asisten catatan dan belajar mahasis
 
 ## 3. Bukti Mesin Hijau (Verification & Tests)
 
-Aplikasi telah lulus pengujian statis (**flutter analyze**) dan pengujian dinamis (**flutter test**) dengan **0 warning / 0 error**:
+Aplikasi telah lulus pengujian statis (**flutter analyze**), pengujian unit/widget (**flutter test**), pengujian coverage, dan **integration test** pada emulator Android. Rincian laporan Week 12 tersedia di [`../12-week-12-testing-quality-assurance/README.md`](../12-week-12-testing-quality-assurance/README.md).
 
 ### A. Output `flutter analyze`
 ```bash
 $ flutter analyze
 Analyzing 10-week-10-ai-feature-integration...
-No issues found! (ran in 1.7s)
+No issues found! (ran in 5.3s)
 ```
 
 ### B. Output `flutter test`
 ```bash
 $ flutter test
-00:00 +0: .../test/search_filter_test.dart
-00:01 +7: .../test/widget/empty_state_widget_test.dart
-00:02 +18: .../test/ai_service_test.dart
-00:02 +28: .../test/widget/chat_screen_test.dart
-00:03 +32: All tests passed!
+00:02 +48: All tests passed!
 ```
 
-**Ringkasan Test Suite (32 skenario pengujian lulus):**
-- `test/search_filter_test.dart`: 7 unit test untuk logika filter pencarian catatan.
+**Ringkasan 48 skenario pengujian lulus (31 unit test + 17 widget test):**
+- `test/search_filter_test.dart`: 7 unit test logika filter pencarian catatan.
+- `test/note_title_validator_test.dart`: 3 unit test validasi judul catatan.
+- `test/notes_notifier_test.dart`: 5 unit test repository/async (sukses, loading, error, tambah, hapus).
+- `test/ai_service_test.dart`: 16 unit test sanitasi privasi, secure storage, parsing respons Gemini, error HTTP, timeout, dan offline fallback.
 - `test/widget/empty_state_widget_test.dart`: 5 widget test tampilan empty state.
-- `test/ai_service_test.dart`: 16 unit test mencakup sanitasi privasi (NIK, nomor telepon, email), enkripsi secure storage, parsing respons JSON Gemini, error status HTTP (400, 401, 429, 500), timeout, serta verifikasi rule engine offline fallback.
-- `test/widget/chat_screen_test.dart`: 4 widget test untuk AppBar, quick prompt chips, pembukaan modal konfigurasi API Key, pembersihan riwayat obrolan, dan penanganan dialog fallback error.
+- `test/widget/chat_screen_test.dart`: 4 widget test AppBar, quick prompt chips, modal API key, pembersihan riwayat, dan dialog fallback.
+- `test/widget/notes_screen_test.dart`: 8 widget test tampilan awal, loading, data kosong, error, daftar catatan, input tidak valid, tambah catatan, pencarian, dan hapus via swipe.
+
+### C. Output `flutter test --coverage`
+```bash
+$ flutter test --coverage
+00:05 +48: All tests passed!
+```
+Total coverage: **78,5% (694/884 baris)**. Rincian per file ada di laporan Week 12.
+
+### D. Output integration test
+```bash
+$ flutter test integration_test/app_test.dart -d emulator-5554
+00:00 +0: pengguna dapat menambah, mencari, dan menghapus catatan
+00:10 +1: (tearDownAll)
+00:11 +1: All tests passed!
+```
+Alur yang diuji: buka aplikasi → tambah catatan → cari catatan → hapus catatan.
 
 ---
 
@@ -118,13 +138,20 @@ $ flutter test
 │   │       ├── domain/                  # Pure entity Note & search use case
 │   │       └── presentation/            # NotesScreen, NoteSearchBar, NoteCard, AddNoteSheet
 │   └── main.dart                        # Entry point Flutter & konfigurasi tema Material 3
+├── integration_test/
+│   └── app_test.dart                    # Integration test alur tambah, cari, dan hapus catatan
 ├── test/
 │   ├── ai_service_test.dart             # 16 unit tests: sanitasi data, API Gemini, fallback
+│   ├── note_title_validator_test.dart   # 3 unit tests: validasi judul catatan
+│   ├── notes_notifier_test.dart         # 5 unit tests: repository/async, loading, error, CRUD
 │   ├── search_filter_test.dart          # 7 unit tests: logika filter judul catatan
 │   ├── widget_test.dart                 # Smoke test dasar
+│   ├── fakes/
+│   │   └── fake_notes_repository.dart   # Fake NotesRepository untuk pengujian
 │   └── widget/
 │       ├── chat_screen_test.dart        # 4 widget tests: interaksi UI chat, modal API key, fallback
-│       └── empty_state_widget_test.dart # 5 widget tests: empty state visual
+│       ├── empty_state_widget_test.dart # 5 widget tests: empty state visual
+│       └── notes_screen_test.dart       # 8 widget tests: tampilan, loading, error, CRUD, search
 ├── docs/
 │   └── ai-log.md                        # Log interaksi prompt sistem, user prompt, sanitasi, dan fallback
 ├── screenshots/                         # Bukti visual antarmuka dan mesin hijau
@@ -192,3 +219,31 @@ flutter run
 4. Masukkan Google Gemini API Key Anda (dapat diperoleh gratis di [Google AI Studio](https://aistudio.google.com/)).
 5. Tekan tombol **Tes Koneksi** untuk memverifikasi keabsahan kunci.
 6. Tekan **Simpan**. Kunci akan tersimpan secara terenkripsi dan siap digunakan.
+
+---
+
+## 8. Implementasi Praktikum Week 12 – Testing & QA
+
+Praktikum Week 12 diterapkan langsung pada aplikasi Week 10 ini tanpa membuat aplikasi baru dan tanpa mengubah desain UI.
+
+### Perubahan pendukung pengujian
+- `lib/features/notes/domain/note_title_validator.dart`: fungsi murni `isValidNoteTitle()`.
+- `AddNoteSheet`: validasi judul memakai fungsi tersebut dan ditambahkan Key `note-title-field`, `note-body-field`, `save-note-button`, `cancel-note-button`.
+- `NotesScreen`: FAB diberi Key `add-note-fab`.
+- `pubspec.yaml`: menambahkan `integration_test` dari Flutter SDK.
+
+### Perintah pengujian
+```bash
+flutter pub get
+flutter test
+flutter test --coverage
+flutter analyze
+flutter test integration_test/app_test.dart -d emulator-5554
+```
+
+### Hasil
+- Unit + widget test: **48 lulus**.
+- Integration test: **1 lulus** pada Android Emulator `emulator-5554`.
+- `flutter analyze`: **No issues found**.
+- Coverage: **78,5% (694/884 baris)**.
+- Laporan lengkap: [`../12-week-12-testing-quality-assurance/README.md`](../12-week-12-testing-quality-assurance/README.md).
