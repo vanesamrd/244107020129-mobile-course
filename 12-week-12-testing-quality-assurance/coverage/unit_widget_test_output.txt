@@ -1,0 +1,50 @@
+00:00 +0: loading /Users/vanesshh/244107020129-mobile-course/10-week-10-ai-feature-integration/test/search_filter_test.dart
+00:00 +0: /Users/vanesshh/244107020129-mobile-course/10-week-10-ai-feature-integration/test/search_filter_test.dart: filterNotes – query kosong mengembalikan semua catatan
+00:00 +1: /Users/vanesshh/244107020129-mobile-course/10-week-10-ai-feature-integration/test/search_filter_test.dart: filterNotes – query spasi saja mengembalikan semua catatan
+00:00 +2: /Users/vanesshh/244107020129-mobile-course/10-week-10-ai-feature-integration/test/search_filter_test.dart: filterNotes – filter abaikan huruf besar/kecil
+00:00 +3: /Users/vanesshh/244107020129-mobile-course/10-week-10-ai-feature-integration/test/search_filter_test.dart: filterNotes – query tak cocok kembalikan kosong
+00:00 +4: /Users/vanesshh/244107020129-mobile-course/10-week-10-ai-feature-integration/test/search_filter_test.dart: filterNotes – partial match pada tengah kata
+00:00 +5: /Users/vanesshh/244107020129-mobile-course/10-week-10-ai-feature-integration/test/search_filter_test.dart: filterNotes – filter hanya cocokkan judul, bukan isi (body)
+00:00 +6: /Users/vanesshh/244107020129-mobile-course/10-week-10-ai-feature-integration/test/search_filter_test.dart: filterNotes – query satu karakter cocok beberapa judul
+00:00 +7: /Users/vanesshh/244107020129-mobile-course/10-week-10-ai-feature-integration/test/widget/empty_state_widget_test.dart: EmptyStateWidget – tampil saat tidak ada catatan sama sekali
+00:00 +8: /Users/vanesshh/244107020129-mobile-course/10-week-10-ai-feature-integration/test/widget/empty_state_widget_test.dart: EmptyStateWidget – tampil saat tidak ada catatan sama sekali
+00:00 +9: /Users/vanesshh/244107020129-mobile-course/10-week-10-ai-feature-integration/test/widget/empty_state_widget_test.dart: EmptyStateWidget – tampil saat tidak ada catatan sama sekali
+00:00 +10: /Users/vanesshh/244107020129-mobile-course/10-week-10-ai-feature-integration/test/widget/empty_state_widget_test.dart: EmptyStateWidget – tampil saat tidak ada catatan sama sekali
+00:00 +11: /Users/vanesshh/244107020129-mobile-course/10-week-10-ai-feature-integration/test/widget/empty_state_widget_test.dart: EmptyStateWidget – tampil saat tidak ada catatan sama sekali
+00:00 +12: /Users/vanesshh/244107020129-mobile-course/10-week-10-ai-feature-integration/test/widget/empty_state_widget_test.dart: EmptyStateWidget – tampil saat tidak ada catatan sama sekali
+00:00 +13: /Users/vanesshh/244107020129-mobile-course/10-week-10-ai-feature-integration/test/widget/empty_state_widget_test.dart: EmptyStateWidget – tampil saat tidak ada catatan sama sekali
+00:00 +14: /Users/vanesshh/244107020129-mobile-course/10-week-10-ai-feature-integration/test/widget/empty_state_widget_test.dart: EmptyStateWidget – tampil saat tidak ada catatan sama sekali
+00:00 +15: /Users/vanesshh/244107020129-mobile-course/10-week-10-ai-feature-integration/test/widget/empty_state_widget_test.dart: EmptyStateWidget – tampil saat tidak ada catatan sama sekali
+00:00 +16: /Users/vanesshh/244107020129-mobile-course/10-week-10-ai-feature-integration/test/widget/empty_state_widget_test.dart: EmptyStateWidget – tampil saat tidak ada catatan sama sekali
+00:00 +17: /Users/vanesshh/244107020129-mobile-course/10-week-10-ai-feature-integration/test/widget/empty_state_widget_test.dart: EmptyStateWidget – tampil saat tidak ada catatan sama sekali
+00:00 +18: /Users/vanesshh/244107020129-mobile-course/10-week-10-ai-feature-integration/test/widget/empty_state_widget_test.dart: EmptyStateWidget – tampil saat tidak ada catatan sama sekali
+00:00 +19: /Users/vanesshh/244107020129-mobile-course/10-week-10-ai-feature-integration/test/widget/empty_state_widget_test.dart: EmptyStateWidget – tampil saat tidak ada catatan sama sekali
+00:00 +20: /Users/vanesshh/244107020129-mobile-course/10-week-10-ai-feature-integration/test/widget/empty_state_widget_test.dart: EmptyStateWidget – tampil saat tidak ada catatan sama sekali
+00:00 +21: /Users/vanesshh/244107020129-mobile-course/10-week-10-ai-feature-integration/test/widget/chat_screen_test.dart: ChatScreen menampilkan AppBar, pesan sambutan, dan quick prompts
+00:00 +22: /Users/vanesshh/244107020129-mobile-course/10-week-10-ai-feature-integration/test/widget/chat_screen_test.dart: ChatScreen menampilkan AppBar, pesan sambutan, dan quick prompts
+00:00 +23: /Users/vanesshh/244107020129-mobile-course/10-week-10-ai-feature-integration/test/widget/chat_screen_test.dart: ChatScreen menampilkan AppBar, pesan sambutan, dan quick prompts
+00:00 +24: /Users/vanesshh/244107020129-mobile-course/10-week-10-ai-feature-integration/test/widget/chat_screen_test.dart: ChatScreen menampilkan AppBar, pesan sambutan, dan quick prompts
+00:00 +25: /Users/vanesshh/244107020129-mobile-course/10-week-10-ai-feature-integration/test/widget/chat_screen_test.dart: ChatScreen menampilkan AppBar, pesan sambutan, dan quick prompts
+00:00 +26: /Users/vanesshh/244107020129-mobile-course/10-week-10-ai-feature-integration/test/widget/chat_screen_test.dart: ChatScreen menampilkan AppBar, pesan sambutan, dan quick prompts
+00:00 +27: /Users/vanesshh/244107020129-mobile-course/10-week-10-ai-feature-integration/test/widget/chat_screen_test.dart: ChatScreen menampilkan AppBar, pesan sambutan, dan quick prompts
+00:00 +28: /Users/vanesshh/244107020129-mobile-course/10-week-10-ai-feature-integration/test/widget/chat_screen_test.dart: ChatScreen menampilkan AppBar, pesan sambutan, dan quick prompts
+00:00 +29: /Users/vanesshh/244107020129-mobile-course/10-week-10-ai-feature-integration/test/widget/chat_screen_test.dart: ChatScreen menampilkan AppBar, pesan sambutan, dan quick prompts
+00:01 +30: /Users/vanesshh/244107020129-mobile-course/10-week-10-ai-feature-integration/test/widget/chat_screen_test.dart: ChatScreen menampilkan AppBar, pesan sambutan, dan quick prompts
+00:01 +31: /Users/vanesshh/244107020129-mobile-course/10-week-10-ai-feature-integration/test/widget/chat_screen_test.dart: ChatScreen menampilkan AppBar, pesan sambutan, dan quick prompts
+00:01 +32: /Users/vanesshh/244107020129-mobile-course/10-week-10-ai-feature-integration/test/widget/chat_screen_test.dart: ChatScreen menampilkan AppBar, pesan sambutan, dan quick prompts
+00:01 +33: /Users/vanesshh/244107020129-mobile-course/10-week-10-ai-feature-integration/test/widget/chat_screen_test.dart: ChatScreen menampilkan AppBar, pesan sambutan, dan quick prompts
+00:01 +34: /Users/vanesshh/244107020129-mobile-course/10-week-10-ai-feature-integration/test/widget/chat_screen_test.dart: ChatScreen menampilkan AppBar, pesan sambutan, dan quick prompts
+00:01 +35: /Users/vanesshh/244107020129-mobile-course/10-week-10-ai-feature-integration/test/widget/notes_screen_test.dart: NotesScreen – menampilkan indikator loading saat data dimuat
+00:01 +36: /Users/vanesshh/244107020129-mobile-course/10-week-10-ai-feature-integration/test/widget/notes_screen_test.dart: NotesScreen – menampilkan indikator loading saat data dimuat
+00:01 +37: /Users/vanesshh/244107020129-mobile-course/10-week-10-ai-feature-integration/test/widget/notes_screen_test.dart: NotesScreen – menampilkan indikator loading saat data dimuat
+00:01 +38: /Users/vanesshh/244107020129-mobile-course/10-week-10-ai-feature-integration/test/widget/notes_screen_test.dart: NotesScreen – menampilkan indikator loading saat data dimuat
+00:01 +39: /Users/vanesshh/244107020129-mobile-course/10-week-10-ai-feature-integration/test/widget/chat_screen_test.dart: ChatScreen dapat membuka dialog/sheet Pengaturan API Key
+00:01 +40: /Users/vanesshh/244107020129-mobile-course/10-week-10-ai-feature-integration/test/widget/chat_screen_test.dart: ChatScreen dapat membuka dialog/sheet Pengaturan API Key
+00:02 +41: /Users/vanesshh/244107020129-mobile-course/10-week-10-ai-feature-integration/test/widget/notes_screen_test.dart: NotesScreen – menampilkan pesan error ketika repository gagal
+00:02 +42: /Users/vanesshh/244107020129-mobile-course/10-week-10-ai-feature-integration/test/widget/chat_screen_test.dart: ChatScreen dapat membersihkan riwayat obrolan
+00:02 +43: /Users/vanesshh/244107020129-mobile-course/10-week-10-ai-feature-integration/test/widget/notes_screen_test.dart: NotesScreen – tidak menyimpan catatan ketika judul tidak valid
+00:02 +44: /Users/vanesshh/244107020129-mobile-course/10-week-10-ai-feature-integration/test/widget/chat_screen_test.dart: ChatScreen menampilkan dialog fallback ketika ask gagal
+00:02 +45: /Users/vanesshh/244107020129-mobile-course/10-week-10-ai-feature-integration/test/widget/notes_screen_test.dart: NotesScreen – menambah catatan melalui FAB dan bottom sheet
+00:02 +46: /Users/vanesshh/244107020129-mobile-course/10-week-10-ai-feature-integration/test/widget/notes_screen_test.dart: NotesScreen – memfilter catatan melalui kolom pencarian
+00:02 +47: /Users/vanesshh/244107020129-mobile-course/10-week-10-ai-feature-integration/test/widget/notes_screen_test.dart: NotesScreen – menghapus catatan melalui swipe
+00:02 +48: All tests passed!

@@ -1,0 +1,7 @@
+00:00 +0: loading /Users/vanesshh/244107020129-mobile-course/10-week-10-ai-feature-integration/integration_test/app_test.dart
+Running Gradle task 'assembleDebug'...                             16,4s
+✓ Built build/app/outputs/flutter-apk/app-debug.apk
+Installing build/app/outputs/flutter-apk/app-debug.apk...          499ms
+00:00 +0: pengguna dapat menambah, mencari, dan menghapus catatan
+00:10 +1: (tearDownAll)
+00:11 +1: All tests passed!
