@@ -34,7 +34,9 @@ void main() {
     });
 
     test('meneruskan error repository sebagai AsyncError', () async {
-      final repository = FakeNotesRepository(error: Exception('database gagal'));
+      final repository = FakeNotesRepository(
+        error: Exception('database gagal'),
+      );
       final container = createContainer(repository);
 
       await expectLater(

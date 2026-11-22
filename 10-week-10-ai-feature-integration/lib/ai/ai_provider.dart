@@ -88,7 +88,8 @@ class ChatNotifier extends StateNotifier<ChatState> {
       messages: [
         ChatMessage(
           id: 'welcome',
-          text: 'Halo! Saya asisten catatan AI Anda. Ada yang bisa saya bantu hari ini? '
+          text:
+              'Halo! Saya asisten catatan AI Anda. Ada yang bisa saya bantu hari ini? '
               'Anda dapat meminta saya merangkum catatan, memberi ide judul, atau menyusun to-do list.',
           sender: MessageSender.ai,
           timestamp: DateTime.now(),
@@ -103,7 +104,10 @@ class ChatNotifier extends StateNotifier<ChatState> {
   }
 
   /// Mengirim pesan dan menerima respons AI.
-  Future<String?> sendMessage(String text, {bool fallbackToOffline = false}) async {
+  Future<String?> sendMessage(
+    String text, {
+    bool fallbackToOffline = false,
+  }) async {
     final trimmed = text.trim();
     if (trimmed.isEmpty) return null;
 
@@ -154,10 +158,7 @@ class ChatNotifier extends StateNotifier<ChatState> {
       }
 
       final errorStr = e.toString();
-      state = state.copyWith(
-        isLoading: false,
-        errorMessage: errorStr,
-      );
+      state = state.copyWith(isLoading: false, errorMessage: errorStr);
       return errorStr;
     }
   }
@@ -196,7 +197,8 @@ class ChatNotifier extends StateNotifier<ChatState> {
       messages: [
         ChatMessage(
           id: DateTime.now().millisecondsSinceEpoch.toString(),
-          text: 'Riwayat obrolan telah dibersihkan. Silakan ajukan pertanyaan baru!',
+          text:
+              'Riwayat obrolan telah dibersihkan. Silakan ajukan pertanyaan baru!',
           sender: MessageSender.ai,
           timestamp: DateTime.now(),
         ),

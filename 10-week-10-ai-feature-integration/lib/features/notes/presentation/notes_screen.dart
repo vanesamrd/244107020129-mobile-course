@@ -39,9 +39,7 @@ class NotesScreen extends ConsumerWidget {
                 tooltip: 'AI Asisten Catatan',
                 onPressed: () {
                   Navigator.of(context).push(
-                    MaterialPageRoute<void>(
-                      builder: (_) => const ChatScreen(),
-                    ),
+                    MaterialPageRoute<void>(builder: (_) => const ChatScreen()),
                   );
                 },
               ),

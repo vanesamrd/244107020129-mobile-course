@@ -9,6 +9,7 @@ import 'package:mocktail/mocktail.dart';
 import 'package:notes_app/ai/ai_service.dart';
 
 class MockStorage extends Mock implements FlutterSecureStorage {}
+
 class MockHttpClient extends Mock implements http.Client {}
 
 void main() {
@@ -23,10 +24,7 @@ void main() {
   setUp(() {
     mockStorage = MockStorage();
     mockClient = MockHttpClient();
-    aiService = AiService(
-      storage: mockStorage,
-      httpClient: mockClient,
-    );
+    aiService = AiService(storage: mockStorage, httpClient: mockClient);
   });
 
   group('Privacy Sanitization Tests', () {
@@ -53,7 +51,8 @@ void main() {
     });
 
     test('sanitizeInput mempertahankan teks aman tanpa data sensitif', () {
-      const input = 'Tolong buatkan ringkasan materi arsitektur mobile Flutter.';
+      const input =
+          'Tolong buatkan ringkasan materi arsitektur mobile Flutter.';
       final sanitized = aiService.sanitizeInput(input);
       expect(sanitized, equals(input));
     });
@@ -61,8 +60,9 @@ void main() {
 
   group('API Key & Secure Storage Tests', () {
     test('getApiKey mengembalikan nilai dari storage', () async {
-      when(() => mockStorage.read(key: AiService.apiKeyStorageKey))
-          .thenAnswer((_) async => 'AIzaSyFakeKey123');
+      when(
+        () => mockStorage.read(key: AiService.apiKeyStorageKey),
+      ).thenAnswer((_) async => 'AIzaSyFakeKey123');
 
       final key = await aiService.getApiKey();
       expect(key, 'AIzaSyFakeKey123');
@@ -70,130 +70,156 @@ void main() {
     });
 
     test('hasApiKey return false saat key kosong atau null', () async {
-      when(() => mockStorage.read(key: AiService.apiKeyStorageKey))
-          .thenAnswer((_) async => null);
+      when(
+        () => mockStorage.read(key: AiService.apiKeyStorageKey),
+      ).thenAnswer((_) async => null);
 
       final hasKey = await aiService.hasApiKey();
       expect(hasKey, isFalse);
     });
 
     test('saveApiKey menyimpan key terpotong rapi', () async {
-      when(() => mockStorage.write(
-            key: AiService.apiKeyStorageKey,
-            value: 'my-secret-key',
-          )).thenAnswer((_) async {});
+      when(
+        () => mockStorage.write(
+          key: AiService.apiKeyStorageKey,
+          value: 'my-secret-key',
+        ),
+      ).thenAnswer((_) async {});
 
       await aiService.saveApiKey('  my-secret-key  ');
-      verify(() => mockStorage.write(
-            key: AiService.apiKeyStorageKey,
-            value: 'my-secret-key',
-          )).called(1);
+      verify(
+        () => mockStorage.write(
+          key: AiService.apiKeyStorageKey,
+          value: 'my-secret-key',
+        ),
+      ).called(1);
     });
 
     test('deleteApiKey menghapus key dari secure storage', () async {
-      when(() => mockStorage.delete(key: AiService.apiKeyStorageKey))
-          .thenAnswer((_) async {});
+      when(
+        () => mockStorage.delete(key: AiService.apiKeyStorageKey),
+      ).thenAnswer((_) async {});
 
       await aiService.deleteApiKey();
-      verify(() => mockStorage.delete(key: AiService.apiKeyStorageKey)).called(1);
+      verify(
+        () => mockStorage.delete(key: AiService.apiKeyStorageKey),
+      ).called(1);
     });
   });
 
   group('ask() Request & Response Handling', () {
     test('ask melemparkan exception jika API Key belum diatur', () async {
-      when(() => mockStorage.read(key: AiService.apiKeyStorageKey))
-          .thenAnswer((_) async => null);
+      when(
+        () => mockStorage.read(key: AiService.apiKeyStorageKey),
+      ).thenAnswer((_) async => null);
 
       expect(
         () => aiService.ask('Apa kabar?'),
-        throwsA(isA<AiServiceException>().having(
-          (e) => e.statusCode,
-          'statusCode',
-          401,
-        )),
+        throwsA(
+          isA<AiServiceException>().having(
+            (e) => e.statusCode,
+            'statusCode',
+            401,
+          ),
+        ),
       );
     });
 
     test('ask melemparkan exception jika pertanyaan kosong', () async {
-      expect(
-        () => aiService.ask('   '),
-        throwsA(isA<AiServiceException>()),
-      );
+      expect(() => aiService.ask('   '), throwsA(isA<AiServiceException>()));
     });
 
     test('ask berhasil mem-parse respons 200 dari Gemini', () async {
-      when(() => mockStorage.read(key: AiService.apiKeyStorageKey))
-          .thenAnswer((_) async => 'valid-api-key');
+      when(
+        () => mockStorage.read(key: AiService.apiKeyStorageKey),
+      ).thenAnswer((_) async => 'valid-api-key');
 
       final mockResponseBody = jsonEncode({
         'candidates': [
           {
             'content': {
               'parts': [
-                {'text': 'Ini adalah ringkasan catatan kuliah Anda.'}
-              ]
-            }
-          }
-        ]
+                {'text': 'Ini adalah ringkasan catatan kuliah Anda.'},
+              ],
+            },
+          },
+        ],
       });
 
-      when(() => mockClient.post(
-            any(),
-            headers: any(named: 'headers'),
-            body: any(named: 'body'),
-          )).thenAnswer((_) async => http.Response(mockResponseBody, 200));
+      when(
+        () => mockClient.post(
+          any(),
+          headers: any(named: 'headers'),
+          body: any(named: 'body'),
+        ),
+      ).thenAnswer((_) async => http.Response(mockResponseBody, 200));
 
       final response = await aiService.ask('Tolong buat ringkasan');
       expect(response, 'Ini adalah ringkasan catatan kuliah Anda.');
     });
 
     test('ask menangani status 429 (Rate limit)', () async {
-      when(() => mockStorage.read(key: AiService.apiKeyStorageKey))
-          .thenAnswer((_) async => 'valid-api-key');
+      when(
+        () => mockStorage.read(key: AiService.apiKeyStorageKey),
+      ).thenAnswer((_) async => 'valid-api-key');
 
-      when(() => mockClient.post(
-            any(),
-            headers: any(named: 'headers'),
-            body: any(named: 'body'),
-          )).thenAnswer((_) async => http.Response('Rate limit exceeded', 429));
+      when(
+        () => mockClient.post(
+          any(),
+          headers: any(named: 'headers'),
+          body: any(named: 'body'),
+        ),
+      ).thenAnswer((_) async => http.Response('Rate limit exceeded', 429));
 
       expect(
         () => aiService.ask('Pertanyaan'),
-        throwsA(isA<AiServiceException>().having(
-          (e) => e.statusCode,
-          'statusCode',
-          429,
-        )),
+        throwsA(
+          isA<AiServiceException>().having(
+            (e) => e.statusCode,
+            'statusCode',
+            429,
+          ),
+        ),
       );
     });
 
     test('ask menangani status 500 (Internal Server Error)', () async {
-      when(() => mockStorage.read(key: AiService.apiKeyStorageKey))
-          .thenAnswer((_) async => 'valid-api-key');
+      when(
+        () => mockStorage.read(key: AiService.apiKeyStorageKey),
+      ).thenAnswer((_) async => 'valid-api-key');
 
-      when(() => mockClient.post(
-            any(),
-            headers: any(named: 'headers'),
-            body: any(named: 'body'),
-          )).thenAnswer((_) async => http.Response('Server Error', 500));
+      when(
+        () => mockClient.post(
+          any(),
+          headers: any(named: 'headers'),
+          body: any(named: 'body'),
+        ),
+      ).thenAnswer((_) async => http.Response('Server Error', 500));
 
       expect(
         () => aiService.ask('Pertanyaan'),
-        throwsA(isA<AiServiceException>().having(
-          (e) => e.statusCode,
-          'statusCode',
-          500,
-        )),
+        throwsA(
+          isA<AiServiceException>().having(
+            (e) => e.statusCode,
+            'statusCode',
+            500,
+          ),
+        ),
       );
     });
   });
 
   group('Offline Fallback Tests', () {
-    test('generateOfflineFallback memberikan respons relevan untuk ringkasan', () {
-      final fallback = aiService.generateOfflineFallback('tolong ringkas catatan ini');
-      expect(fallback, contains('[Mode Offline Fallback]'));
-      expect(fallback, contains('ringkasan'));
-    });
+    test(
+      'generateOfflineFallback memberikan respons relevan untuk ringkasan',
+      () {
+        final fallback = aiService.generateOfflineFallback(
+          'tolong ringkas catatan ini',
+        );
+        expect(fallback, contains('[Mode Offline Fallback]'));
+        expect(fallback, contains('ringkasan'));
+      },
+    );
 
     test('generateOfflineFallback memberikan respons relevan untuk judul', () {
       final fallback = aiService.generateOfflineFallback('beri ide judul');
@@ -201,10 +227,15 @@ void main() {
       expect(fallback, contains('judul'));
     });
 
-    test('generateOfflineFallback memberikan respons umum untuk input lain', () {
-      final fallback = aiService.generateOfflineFallback('siapa penemu komputer?');
-      expect(fallback, contains('[Mode Offline Fallback]'));
-      expect(fallback, contains('offline'));
-    });
+    test(
+      'generateOfflineFallback memberikan respons umum untuk input lain',
+      () {
+        final fallback = aiService.generateOfflineFallback(
+          'siapa penemu komputer?',
+        );
+        expect(fallback, contains('[Mode Offline Fallback]'));
+        expect(fallback, contains('offline'));
+      },
+    );
   });
 }

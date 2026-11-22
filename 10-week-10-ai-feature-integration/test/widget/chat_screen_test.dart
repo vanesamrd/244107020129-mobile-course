@@ -22,37 +22,39 @@ void main() {
 
   Widget buildTestableWidget() {
     return ProviderScope(
-      overrides: [
-        aiServiceProvider.overrideWithValue(mockAiService),
-      ],
-      child: const MaterialApp(
-        home: ChatScreen(),
-      ),
+      overrides: [aiServiceProvider.overrideWithValue(mockAiService)],
+      child: const MaterialApp(home: ChatScreen()),
     );
   }
 
-  testWidgets('ChatScreen menampilkan AppBar, pesan sambutan, dan quick prompts',
-      (tester) async {
-    await tester.pumpWidget(buildTestableWidget());
-    await tester.pumpAndSettle();
+  testWidgets(
+    'ChatScreen menampilkan AppBar, pesan sambutan, dan quick prompts',
+    (tester) async {
+      await tester.pumpWidget(buildTestableWidget());
+      await tester.pumpAndSettle();
 
-    // Check AppBar
-    expect(find.text('AI Asisten Catatan'), findsOneWidget);
+      // Check AppBar
+      expect(find.text('AI Asisten Catatan'), findsOneWidget);
 
-    // Check Welcome message
-    expect(find.textContaining('Halo! Saya asisten catatan AI Anda'), findsOneWidget);
+      // Check Welcome message
+      expect(
+        find.textContaining('Halo! Saya asisten catatan AI Anda'),
+        findsOneWidget,
+      );
 
-    // Check Quick prompts
-    expect(find.text('💡 Buat ide judul catatan'), findsOneWidget);
-    expect(find.text('📝 Ringkas konsep materi'), findsOneWidget);
+      // Check Quick prompts
+      expect(find.text('💡 Buat ide judul catatan'), findsOneWidget);
+      expect(find.text('📝 Ringkas konsep materi'), findsOneWidget);
 
-    // Check Text field & Send button
-    expect(find.byType(TextField), findsOneWidget);
-    expect(find.byIcon(Icons.send_rounded), findsOneWidget);
-  });
+      // Check Text field & Send button
+      expect(find.byType(TextField), findsOneWidget);
+      expect(find.byIcon(Icons.send_rounded), findsOneWidget);
+    },
+  );
 
-  testWidgets('ChatScreen dapat membuka dialog/sheet Pengaturan API Key',
-      (tester) async {
+  testWidgets('ChatScreen dapat membuka dialog/sheet Pengaturan API Key', (
+    tester,
+  ) async {
     await tester.pumpWidget(buildTestableWidget());
     await tester.pumpAndSettle();
 
@@ -64,13 +66,15 @@ void main() {
 
     // Verify modal sheet appears
     expect(find.text('Pengaturan Gemini API Key'), findsOneWidget);
-    expect(find.text('Disimpan terenkripsi di FlutterSecureStorage'), findsOneWidget);
+    expect(
+      find.text('Disimpan terenkripsi di FlutterSecureStorage'),
+      findsOneWidget,
+    );
     expect(find.text('Tes Koneksi'), findsOneWidget);
     expect(find.text('Simpan'), findsOneWidget);
   });
 
-  testWidgets('ChatScreen dapat membersihkan riwayat obrolan',
-      (tester) async {
+  testWidgets('ChatScreen dapat membersihkan riwayat obrolan', (tester) async {
     await tester.pumpWidget(buildTestableWidget());
     await tester.pumpAndSettle();
 
@@ -80,15 +84,21 @@ void main() {
     await tester.tap(clearBtn);
     await tester.pumpAndSettle();
 
-    expect(find.textContaining('Riwayat obrolan telah dibersihkan'), findsOneWidget);
+    expect(
+      find.textContaining('Riwayat obrolan telah dibersihkan'),
+      findsOneWidget,
+    );
   });
 
-  testWidgets('ChatScreen menampilkan dialog fallback ketika ask gagal',
-      (tester) async {
-    when(() => mockAiService.ask(any()))
-        .thenThrow(AiServiceException('Koneksi internet bermasalah.'));
-    when(() => mockAiService.generateOfflineFallback(any()))
-        .thenReturn('[Mode Offline Fallback]\nTips ringkasan cepat: ide pokok');
+  testWidgets('ChatScreen menampilkan dialog fallback ketika ask gagal', (
+    tester,
+  ) async {
+    when(
+      () => mockAiService.ask(any()),
+    ).thenThrow(AiServiceException('Koneksi internet bermasalah.'));
+    when(
+      () => mockAiService.generateOfflineFallback(any()),
+    ).thenReturn('[Mode Offline Fallback]\nTips ringkasan cepat: ide pokok');
 
     await tester.pumpWidget(buildTestableWidget());
     await tester.pumpAndSettle();

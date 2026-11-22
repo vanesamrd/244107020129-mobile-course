@@ -73,7 +73,9 @@ void main() {
     testWidgets('menampilkan pesan error ketika repository gagal', (
       tester,
     ) async {
-      final repository = FakeNotesRepository(error: Exception('database rusak'));
+      final repository = FakeNotesRepository(
+        error: Exception('database rusak'),
+      );
 
       await tester.pumpWidget(buildApp(repository));
       await tester.pumpAndSettle();
@@ -137,10 +139,7 @@ void main() {
       await tester.pumpWidget(buildApp(repository));
       await tester.pumpAndSettle();
 
-      await tester.enterText(
-        find.byKey(const Key('search_field')),
-        'belanja',
-      );
+      await tester.enterText(find.byKey(const Key('search_field')), 'belanja');
       await tester.pumpAndSettle();
 
       expect(find.text('Belanja bulanan'), findsOneWidget);
@@ -163,10 +162,7 @@ void main() {
       await tester.pumpWidget(buildApp(repository));
       await tester.pumpAndSettle();
 
-      await tester.drag(
-        find.text('Catatan sementara'),
-        const Offset(-600, 0),
-      );
+      await tester.drag(find.text('Catatan sementara'), const Offset(-600, 0));
       await tester.pumpAndSettle();
 
       expect(repository.deletedIds, [1]);

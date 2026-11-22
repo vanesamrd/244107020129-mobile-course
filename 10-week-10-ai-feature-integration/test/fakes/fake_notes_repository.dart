@@ -4,10 +4,8 @@ import 'package:notes_app/features/notes/domain/note.dart';
 import 'package:notes_app/features/notes/domain/notes_repository.dart';
 
 class FakeNotesRepository implements NotesRepository {
-  FakeNotesRepository({
-    List<Note> notes = const [],
-    this.error,
-  }) : _notes = [...notes];
+  FakeNotesRepository({List<Note> notes = const [], this.error})
+    : _notes = [...notes];
 
   final List<Note> _notes;
   final Object? error;

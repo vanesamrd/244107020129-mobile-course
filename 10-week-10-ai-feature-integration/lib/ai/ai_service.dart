@@ -28,8 +28,8 @@ class AiService {
     FlutterSecureStorage? storage,
     http.Client? httpClient,
     this.model = defaultModel,
-  })  : _storage = storage ?? const FlutterSecureStorage(),
-        _client = httpClient ?? http.Client();
+  }) : _storage = storage ?? const FlutterSecureStorage(),
+       _client = httpClient ?? http.Client();
 
   String get _apiUrl =>
       'https://generativelanguage.googleapis.com/v1beta/models/$model:generateContent';
@@ -118,21 +118,18 @@ class AiService {
     final requestBody = jsonEncode({
       'systemInstruction': {
         'parts': [
-          {'text': systemPrompt}
-        ]
+          {'text': systemPrompt},
+        ],
       },
       'contents': [
         {
           'role': 'user',
           'parts': [
-            {'text': safeQuestion}
-          ]
-        }
+            {'text': safeQuestion},
+          ],
+        },
       ],
-      'generationConfig': {
-        'temperature': 0.7,
-        'maxOutputTokens': 800,
-      }
+      'generationConfig': {'temperature': 0.7, 'maxOutputTokens': 800},
     });
 
     try {
@@ -185,13 +182,19 @@ class AiService {
         );
       }
     } on TimeoutException {
-      throw AiServiceException('Koneksi ke AI API habis waktu (timeout). Periksa jaringan internet Anda.');
+      throw AiServiceException(
+        'Koneksi ke AI API habis waktu (timeout). Periksa jaringan internet Anda.',
+      );
     } on http.ClientException catch (e) {
-      throw AiServiceException('Kendala jaringan: ${e.message}. Pastikan perangkat terhubung internet.');
+      throw AiServiceException(
+        'Kendala jaringan: ${e.message}. Pastikan perangkat terhubung internet.',
+      );
     } on AiServiceException {
       rethrow;
     } catch (e) {
-      throw AiServiceException('Terjadi kesalahan saat memproses respons AI: $e');
+      throw AiServiceException(
+        'Terjadi kesalahan saat memproses respons AI: $e',
+      );
     }
   }
 
@@ -210,7 +213,9 @@ class AiService {
           '- Ringkasan Materi: Inti Pokok Pembahasan\n'
           '- Catatan Refleksi & Action Plan Mingguan\n'
           '- Quick Reference & Cheat Sheet';
-    } else if (lower.contains('jadwal') || lower.contains('to-do') || lower.contains('tugas')) {
+    } else if (lower.contains('jadwal') ||
+        lower.contains('to-do') ||
+        lower.contains('tugas')) {
       return '📅 [Mode Offline Fallback]\n'
           'Format to-do list efektif:\n'
           '- [ ] Prioritas Utama (High Urgency & Impact)\n'

@@ -67,7 +67,8 @@ class _ChatScreenState extends ConsumerState<ChatScreen> {
   }
 
   void _showErrorFallbackDialog(String errorMessage) {
-    final isKeyMissing = errorMessage.contains('API key belum diatur') ||
+    final isKeyMissing =
+        errorMessage.contains('API key belum diatur') ||
         errorMessage.contains('401') ||
         errorMessage.contains('403');
 
@@ -152,7 +153,10 @@ class _ChatScreenState extends ConsumerState<ChatScreen> {
                           color: cs.primaryContainer,
                           shape: BoxShape.circle,
                         ),
-                        child: Icon(Icons.vpn_key_rounded, color: cs.onPrimaryContainer),
+                        child: Icon(
+                          Icons.vpn_key_rounded,
+                          color: cs.onPrimaryContainer,
+                        ),
                       ),
                       const SizedBox(width: 12),
                       Expanded(
@@ -161,15 +165,15 @@ class _ChatScreenState extends ConsumerState<ChatScreen> {
                           children: [
                             Text(
                               'Pengaturan Gemini API Key',
-                              style: Theme.of(sheetInnerCtx).textTheme.titleLarge?.copyWith(
-                                    fontWeight: FontWeight.bold,
-                                  ),
+                              style: Theme.of(sheetInnerCtx)
+                                  .textTheme
+                                  .titleLarge
+                                  ?.copyWith(fontWeight: FontWeight.bold),
                             ),
                             Text(
                               'Disimpan terenkripsi di FlutterSecureStorage',
-                              style: Theme.of(sheetInnerCtx).textTheme.bodySmall?.copyWith(
-                                    color: cs.onSurfaceVariant,
-                                  ),
+                              style: Theme.of(sheetInnerCtx).textTheme.bodySmall
+                                  ?.copyWith(color: cs.onSurfaceVariant),
                             ),
                           ],
                         ),
@@ -220,22 +224,27 @@ class _ChatScreenState extends ConsumerState<ChatScreen> {
                                   final key = keyController.text.trim();
                                   if (key.isEmpty) {
                                     setSheetState(() {
-                                      statusMessage = 'API Key tidak boleh kosong.';
+                                      statusMessage =
+                                          'API Key tidak boleh kosong.';
                                     });
                                     return;
                                   }
                                   setSheetState(() {
                                     isTesting = true;
-                                    statusMessage = 'Menguji koneksi ke Gemini API...';
+                                    statusMessage =
+                                        'Menguji koneksi ke Gemini API...';
                                   });
                                   try {
                                     await aiService.saveApiKey(key);
                                     await aiService.ask('Halo');
                                     setSheetState(() {
                                       isTesting = false;
-                                      statusMessage = 'Berhasil! Koneksi API valid.';
+                                      statusMessage =
+                                          'Berhasil! Koneksi API valid.';
                                     });
-                                    ref.read(chatProvider.notifier).refreshApiKeyStatus();
+                                    ref
+                                        .read(chatProvider.notifier)
+                                        .refreshApiKeyStatus();
                                   } catch (e) {
                                     setSheetState(() {
                                       isTesting = false;
@@ -247,7 +256,9 @@ class _ChatScreenState extends ConsumerState<ChatScreen> {
                               ? const SizedBox(
                                   width: 16,
                                   height: 16,
-                                  child: CircularProgressIndicator(strokeWidth: 2),
+                                  child: CircularProgressIndicator(
+                                    strokeWidth: 2,
+                                  ),
                                 )
                               : const Icon(Icons.network_check_rounded),
                           label: const Text('Tes Koneksi'),
@@ -272,7 +283,9 @@ class _ChatScreenState extends ConsumerState<ChatScreen> {
                             if (!mounted) return;
                             ScaffoldMessenger.of(context).showSnackBar(
                               const SnackBar(
-                                content: Text('API Key berhasil disimpan di Secure Storage.'),
+                                content: Text(
+                                  'API Key berhasil disimpan di Secure Storage.',
+                                ),
                               ),
                             );
                           },
@@ -292,24 +305,25 @@ class _ChatScreenState extends ConsumerState<ChatScreen> {
   }
 
   void _saveMessageAsNote(String text) {
-    final firstLine = text.split('\n').first.replaceAll(RegExp(r'[#*_-]'), '').trim();
+    final firstLine = text
+        .split('\n')
+        .first
+        .replaceAll(RegExp(r'[#*_-]'), '')
+        .trim();
     final title = firstLine.isNotEmpty
-        ? (firstLine.length > 40 ? '${firstLine.substring(0, 40)}...' : firstLine)
+        ? (firstLine.length > 40
+              ? '${firstLine.substring(0, 40)}...'
+              : firstLine)
         : 'Catatan dari AI';
 
-    ref.read(notesProvider.notifier).addNote(
-          title: title,
-          body: text,
-          color: NoteColor.purple,
-        );
+    ref
+        .read(notesProvider.notifier)
+        .addNote(title: title, body: text, color: NoteColor.purple);
 
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
         content: const Text('Disimpan ke Catatan Saya!'),
-        action: SnackBarAction(
-          label: 'OK',
-          onPressed: () {},
-        ),
+        action: SnackBarAction(label: 'OK', onPressed: () {}),
       ),
     );
   }
@@ -378,7 +392,8 @@ class _ChatScreenState extends ConsumerState<ChatScreen> {
             child: ListView.builder(
               controller: _scrollController,
               padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-              itemCount: chatState.messages.length + (chatState.isLoading ? 1 : 0),
+              itemCount:
+                  chatState.messages.length + (chatState.isLoading ? 1 : 0),
               itemBuilder: (context, index) {
                 if (index == chatState.messages.length && chatState.isLoading) {
                   return const _AiLoadingBubble();
@@ -417,10 +432,7 @@ class _ChatScreenState extends ConsumerState<ChatScreen> {
                 return ActionChip(
                   label: Text(
                     prompt,
-                    style: TextStyle(
-                      fontSize: 12,
-                      color: cs.onSurfaceVariant,
-                    ),
+                    style: TextStyle(fontSize: 12, color: cs.onSurfaceVariant),
                   ),
                   backgroundColor: cs.surfaceContainerHigh,
                   side: BorderSide.none,
@@ -429,7 +441,8 @@ class _ChatScreenState extends ConsumerState<ChatScreen> {
                   ),
                   onPressed: chatState.isLoading
                       ? null
-                      : () => _handleSend(customText: prompt.substring(2).trim()),
+                      : () =>
+                            _handleSend(customText: prompt.substring(2).trim()),
                 );
               },
             ),
@@ -469,7 +482,9 @@ class _ChatScreenState extends ConsumerState<ChatScreen> {
                           color: cs.onSurfaceVariant.withValues(alpha: 0.7),
                         ),
                         filled: true,
-                        fillColor: cs.surfaceContainerHighest.withValues(alpha: 0.5),
+                        fillColor: cs.surfaceContainerHighest.withValues(
+                          alpha: 0.5,
+                        ),
                         contentPadding: const EdgeInsets.symmetric(
                           horizontal: 16,
                           vertical: 12,
@@ -525,8 +540,9 @@ class _ChatBubble extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 6),
       child: Row(
-        mainAxisAlignment:
-            isUser ? MainAxisAlignment.end : MainAxisAlignment.start,
+        mainAxisAlignment: isUser
+            ? MainAxisAlignment.end
+            : MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           if (!isUser) ...[
