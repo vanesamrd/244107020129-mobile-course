@@ -57,7 +57,7 @@ jobs:
       - uses: actions/checkout@v4
       - uses: subosito/flutter-action@v2
         with:
-          channel: stable
+          flutter-version: 3.44.5
           cache: true
       - run: flutter pub get
       - run: dart format --output=none --set-exit-if-changed .
@@ -105,6 +105,19 @@ $ flutter test --coverage
 
 Integration test tidak dijalankan di CI karena membutuhkan emulator/perangkat Android. Integration test tetap dijalankan manual seperti pada laporan Week 12.
 
+### Catatan toolchain
+
+Run pertama di GitHub Actions memakai Flutter stable terbaru saat itu (**3.50.1**) dan gagal pada `flutter analyze --fatal-infos` karena `package:flutter/material.dart` sudah deprecated (diganti `package:material_ui/material_ui.dart` setelah v3.47). Project ini dikembangkan dan diuji dengan **Flutter 3.44.5 / Dart 3.12.2** (revision `f94f4fc`), sehingga workflow dipin ke versi tersebut:
+
+```yaml
+- uses: subosito/flutter-action@v2
+  with:
+    flutter-version: 3.44.5
+    cache: true
+```
+
+Pinning membuat CI konsisten dengan toolchain pengembangan dan mencegah perubahan upstream tiba-tiba. Migrasi ke Flutter 3.50+ dan `material_ui` dicatat sebagai pekerjaan lanjutan, bukan dengan mematikan pemeriksaan.
+
 ## 5. Cara menjalankan dan mengambil artefak
 
 1. Commit dan push workflow ke GitHub.
@@ -130,6 +143,8 @@ Integration test tidak dijalankan di CI karena membutuhkan emulator/perangkat An
 5. **Action memakai tag, bukan commit SHA.** Untuk rantai pasok yang lebih ketat, pin `actions/checkout`, `subosito/flutter-action`, dan `actions/upload-artifact` ke commit SHA.
 6. **Belum ada pengujian perangkat nyata.** Build sukses tidak menjamin izin, konfigurasi aplikasi, dan perilaku di perangkat sudah benar.
 7. **Integration test tidak berjalan di CI.** Perlu emulator (misalnya `reactivecircus/android-emulator-runner`) jika ingin diotomatiskan.
+8. **SDK dipin ke Flutter 3.44.5.** Perlu pekerjaan lanjutan untuk upgrade ke Flutter 3.50+ dan migrasi import `package:flutter/material.dart` menjadi `package:material_ui/material_ui.dart`.
+9. **`pubspec.lock` belum di-commit.** Root `.gitignore` mengabaikan `pubspec.lock`, sehingga dependency di CI dapat ter-resolve berbeda dari lokal. Untuk aplikasi, sebaiknya `pubspec.lock` di-commit agar build reproducible.
 
 ## 8. Jawaban pertanyaan refleksi
 
