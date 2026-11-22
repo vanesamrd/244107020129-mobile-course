@@ -118,6 +118,36 @@ Run pertama di GitHub Actions memakai Flutter stable terbaru saat itu (**3.50.1*
 
 Pinning membuat CI konsisten dengan toolchain pengembangan dan mencegah perubahan upstream tiba-tiba. Migrasi ke Flutter 3.50+ dan `material_ui` dicatat sebagai pekerjaan lanjutan, bukan dengan mematikan pemeriksaan.
 
+### Bukti run CI (GitHub Actions)
+
+| Item | Nilai |
+|---|---|
+| Workflow | `Flutter CI` |
+| Run ID | `44975452199` |
+| URL | https://github.com/vanesamrd/244107020129-mobile-course/actions/runs/44975452199 |
+| Commit | `ae3adfa` (`ci(week-13): pin flutter 3.44.5 to match project toolchain`) |
+| Event | `push` ke `main` |
+| Toolchain | Flutter 3.44.5 |
+| Durasi | 02:18:16–02:24:12 UTC (±5 menit 56 detik) |
+| Hasil | **success** |
+
+Seluruh step berhasil:
+
+| # | Step | Hasil |
+|---:|---|---|
+| 1 | Set up job | success |
+| 2 | `actions/checkout@v4` | success |
+| 3 | `subosito/flutter-action@v2` | success |
+| 4 | `flutter pub get` | success |
+| 5 | `dart format --output=none --set-exit-if-changed .` | success |
+| 6 | `flutter analyze --fatal-infos` | success |
+| 7 | `flutter test --coverage` | success |
+| 8 | `flutter build apk --release` | success |
+| 9 | `flutter build appbundle --release` | success |
+| 10 | `actions/upload-artifact@v4` | success |
+
+Artefak **`android-builds`** tersedia (74.420.196 byte / ±74,4 MB, belum kedaluwarsa, retensi 7 hari) dan dapat diunduh dari halaman run.
+
 ## 5. Cara menjalankan dan mengambil artefak
 
 1. Commit dan push workflow ke GitHub.
