@@ -148,6 +148,12 @@ Seluruh step berhasil:
 
 Artefak **`android-builds`** tersedia (74.420.196 byte / ±74,4 MB, belum kedaluwarsa, retensi 7 hari) dan dapat diunduh dari halaman run.
 
+### Screenshot bukti
+
+- `screenshots/ci-run-44975452199.png` – ringkasan run sukses: commit `ae3adfa`, status **Success**, durasi, dan artefak `android-builds`.
+- `screenshots/ci-job-steps-44975452199.png` – seluruh step job `test-and-build` berstatus hijau.
+- `screenshots/commit-ae3adfa.png` – halaman commit `ae3adfa` pada GitHub.
+
 ## 5. Cara menjalankan dan mengambil artefak
 
 1. Commit dan push workflow ke GitHub.
